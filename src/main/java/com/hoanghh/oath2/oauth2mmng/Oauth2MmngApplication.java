@@ -35,10 +35,12 @@ public class Oauth2MmngApplication extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/error", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
         )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
-                .oauth2Login();
+        .exceptionHandling(e -> e
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+        ).logout(l -> l
+                .logoutSuccessUrl("/").permitAll()
+        )
+        .oauth2Login();
         // @formatter:on
     }
 }
